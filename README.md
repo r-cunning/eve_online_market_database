@@ -52,7 +52,10 @@ This command starts a detached (background) container named timescaledb, sets th
 docker exec -it timescaledb psql -U postgres
 ```
 
-Data Acquisition: Use the bash scripts to download and unpack the raw EVE Online data using Linux or the Windows Subsystem for Linux.
+Data Acquisition: 
+Use the example bash scripts to download (using wget) and unpack the raw EVE Online data using Linux or the Windows Subsystem for Linux.
+I have used historical data hosted on data.everef.net and adam4eve.com to populate my database.
+
 Data Loading: Utilize the provided Python scripts and Jupyter Notebooks to populate the database with the acquired data.
 - Database credentials are held in a config.py file (excluded here).
 Data Analysis and Forecasting: Refer to the EVE Online Forecasting repository for instructions on how to use the data for training machine learning models.
