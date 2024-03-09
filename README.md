@@ -20,21 +20,17 @@ This database does not stand alone; it feeds into a larger ecosystem of data ana
 ### Key Features:
 Player Activity Metrics: The database includes detailed metrics on player activities such as ship destructions and industrial output, offering a rich dataset to base forecasting models and market analysis on.
 
-### Getting Started
+### Getting Started:
 
-#### To get started with this project:
-
-#### Set up Docker: 
-## Prerequisites
+#### Set up Docker
+#### Prerequisites
 
 Before you begin, ensure that Docker Desktop is installed on your system. If not, you can download and install it from the following links:
-
 - [Docker Desktop: The #1 Containerization Tool for Developers | Docker](https://www.docker.com/products/docker-desktop/)
-- Python 3.9 using Anaconda - environment requirements listed in eve_trading_reqs.yml
 
-## Installation Steps
+### Installation Steps
 
-### 1. Pull the TimescaleDB Docker Image
+#### 1. Pull the TimescaleDB Docker Image
 
 First, we need to pull the latest TimescaleDB image from Docker Hub. Open your terminal or command prompt and execute the following command:
 
@@ -42,6 +38,7 @@ First, we need to pull the latest TimescaleDB image from Docker Hub. Open your t
 docker pull timescale/timescaledb:latest-pg14
 ```
 
+#### 2. Run docker container
 With the Docker image pulled, the next step is to run a container instance of TimescaleDB. Use the command below, ensuring to replace mysecretpassword with your chosen password and D:/eve_db/timescaledb with your preferred data storage path on your host machine.
 
 ``` bash
@@ -49,7 +46,7 @@ docker run -d --name timescaledb -e POSTGRES_PASSWORD=mysecretpassword -v D:/eve
 ```
 This command starts a detached (background) container named timescaledb, sets the database password, maps port 5432 on your host to the container, and sets up a mounted volume for data persistence.
 
-#### Run psql within the docker container:
+#### 3. Run psql within the docker container:
 
 ``` bash
 docker exec -it timescaledb psql -U postgres
