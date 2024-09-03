@@ -43,13 +43,13 @@ def create_table_killmail_victims(table_name, db_credentials):
         CREATE TABLE IF NOT EXISTS {}
         (
             date DATE NOT NULL,
-            killmail_id INTEGER NOT NULL,
-            character_id INTEGER,
-            corporation_id INTEGER,
-            alliance_id INTEGER,
-            damage_taken INTEGER,
+            killmail_id BIGINT NOT NULL,
+            character_id BIGINT,
+            corporation_id BIGINT,
+            alliance_id BIGINT,
+            damage_taken BIGINT,
             ship_type_id INTEGER,
-            solar_system_id INTEGER
+            solar_system_id BIGINT
         );
         SELECT create_hypertable('killmail_victims', 'date');
     """).format(sql.Identifier(table_name)))
@@ -79,11 +79,11 @@ def create_table_killmail_attackers(table_name, db_credentials):
             final_blow BOOLEAN,
             security_status FLOAT,
             ship_type_id INTEGER,
-            killmail_id INTEGER,
+            killmail_id BIGINT,
             solar_system_id INTEGER,
-            alliance_id INTEGER,
-            character_id INTEGER,
-            corporation_id INTEGER,
+            alliance_id BIGINT,
+            character_id BIGINT,
+            corporation_id BIGINT,
             weapon_type_id INTEGER
         );
         SELECT create_hypertable('killmail_attackers', 'date');
@@ -108,12 +108,12 @@ def create_table_killmail_items_destroyed(table_name, db_credentials):
     cur.execute(sql.SQL("""
         CREATE TABLE IF NOT EXISTS {}
         (
-            killmail_id INTEGER NOT NULL,
+            killmail_id BIGINT NOT NULL,
             solar_system_id INTEGER,
             killmail_time TIMESTAMP,
             item_type_id INTEGER,
-            quantity_destroyed INTEGER,
-            quantity_dropped INTEGER
+            quantity_destroyed BIGINT,
+            quantity_dropped BIGINT
         );
         SELECT create_hypertable('killmail_items_destroyed', 'killmail_time');
     """).format(sql.Identifier(table_name)))
@@ -137,7 +137,7 @@ def create_table_killmail_ships_destroyed(table_name, db_credentials):
     cur.execute(sql.SQL("""
         CREATE TABLE IF NOT EXISTS {}
         (
-            killmail_id INTEGER NOT NULL,
+            killmail_id BIGINT NOT NULL,
             ship_type_id INTEGER,
             solar_system_id INTEGER,
             date DATE

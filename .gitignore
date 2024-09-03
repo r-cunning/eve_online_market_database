@@ -4,3 +4,5 @@
 # Ignore config.py file
 
 config.py
+Graphs/datasets
+data

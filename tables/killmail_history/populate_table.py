@@ -106,3 +106,42 @@ def ingest_tar_bz2_json_files(directory, db_credentials):
                 process_tar_bz2_file(file_path, db_connection_string)
 
 
+import os
+import datetime
+
+import os
+import datetime
+
+def start_date_ingest_tar_bz2_json_files(directory, db_credentials, start_date_str):
+    # Parse start date string into datetime object
+    start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%d')
+    
+    # Build the database connection string
+    db_connection_string = f"postgresql+psycopg2://{db_credentials['user']}:{db_credentials['password']}@{db_credentials['host']}:{db_credentials['port']}/{db_credentials['dbname']}"
+    
+    # Walk through the directory
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            # Check if file ends with .bz2 and has the correct date format in the name
+            if file.endswith('.bz2') and 'killmails' in file:
+                try:
+                    # Extract date from the filename assuming the format 'killmails-YYYY-MM-DD.tar.bz2'
+                    date_part = file.split('-')[1:4]  # This should capture ['YYYY', 'MMDD']    
+                    date_part[2] = date_part[2].split('.tar.bz2')[0]
+                    
+                        
+                    year = date_part[0]
+                    month = date_part[1]
+                    day = date_part[2]
+                    file_date_str = f"{year}-{month}-{day}"
+                    print(file_date_str)
+                    file_date = datetime.datetime.strptime(file_date_str, '%Y-%m-%d')
+                    
+                    # Process files on or after the start date
+                    if file_date >= start_date:
+                        file_path = os.path.join(root, file)
+                        process_tar_bz2_file(file_path, db_connection_string)
+                except ValueError as e:
+                    print(f"Error processing file {file}: {str(e)}")
+
+

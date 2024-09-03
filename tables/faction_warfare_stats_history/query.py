@@ -1,5 +1,29 @@
 import pandas as pd
 from sqlalchemy import create_engine
+import psycopg2 
+from psycopg2 import sql
+
+
+def get_FW_history(config, table_name, start_date, end_date):
+    # Connect to the PostgreSQL database
+    conn = psycopg2.connect(dbname=config.dbname, user=config.user, password=config.password, host=config.host, port=config.port)
+    cur = conn.cursor()
+    
+    # SQL query with type_id, region_id, and date filtering
+    query = sql.SQL("SELECT * FROM {} WHERE date >= %s AND date <= %s").format(sql.Identifier(table_name))
+    
+    # Execute the query with parameters for type_id, region_id, start_date, and end_date
+    cur.execute(query, (start_date, end_date))
+    
+    # Load the query results into a DataFrame using pandas
+    df = pd.read_sql_query(query.as_string(conn), conn, params=(start_date, end_date))
+    
+    # Close the cursor and the connection
+    cur.close()
+    conn.close()
+    
+    # Return the DataFrame containing the data from the table
+    return df
 
 
 
@@ -27,7 +51,7 @@ def get_history(db_credentials, faction_id = None, start_date=None, end_date=Non
         params.append(end_date)
         
     # SQLAlchemy engine for Pandas
-    engine = create_engine(f'postgresql+psycopg2://{db_credentials["user"]}:{db_credentials["password"]}@{db_credentials["host"]}:{db_credentials["port"]}/{db_credentials["dbname"]}')
+    engine = create_engine(f'postgresql+psycopg2://{db_credentials.user}:{db_credentials.password}@{db_credentials.host}:{db_credentials.port}/{db_credentials.dbname}')
 
     
     
