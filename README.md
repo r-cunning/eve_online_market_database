@@ -35,7 +35,7 @@ Before you begin, ensure that Docker Desktop is installed on your system. If not
 First, we need to pull the latest TimescaleDB image from Docker Hub. Open your terminal or command prompt and execute the following command:
 
 ```bash
-docker pull timescale/timescaledb:latest-pg14
+docker pull timescale/timescaledb:latest-pg12
 ```
 
 #### 2. Run docker container
